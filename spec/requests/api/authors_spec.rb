@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe '/api/authors' do
   let(:response_hash) { JSON(response.body, symbolize_names: true) }
 
