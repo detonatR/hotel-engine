@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Book < ApplicationRecord
-  belongs_to :author
+  include Reviewable
 
-  has_many :reviews, as: :reviewable, dependent: :destroy
+  belongs_to :author
 
   validates :title, :description, presence: true
 end

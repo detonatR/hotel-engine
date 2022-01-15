@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Author, type: :model do
+  it_behaves_like 'a reviewable model'
+
   describe 'associations' do
     it { is_expected.to have_many(:books).dependent(:destroy) }
-    it { is_expected.to have_many(:reviews).dependent(:destroy) }
   end
 
   describe 'validations' do
