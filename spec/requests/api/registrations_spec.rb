@@ -87,21 +87,6 @@ RSpec.describe 'Registration', type: :request do
   end
 
   describe 'PUT /auth' do
-    let(:headers) do
-      {
-        'uid' => response.headers['uid'],
-        'client' => response.headers['client'],
-        'access-token' => response.headers['access-token']
-      }
-    end
-
-    let(:login_params) do
-      {
-        email: user.email,
-        password: user.password
-      }
-    end
-
     let(:params) do
       {
         first_name: first_name
@@ -110,19 +95,19 @@ RSpec.describe 'Registration', type: :request do
 
     let(:user) { create(:user) }
 
-    before { post '/api/auth/sign_in', params: login_params, as: :json }
+    before { login }
 
     context 'when successful' do
       let(:first_name) { 'James' }
 
       it 'updates an existing user' do
-        put signup_url, params: params, headers: headers
+        put signup_url, params: params, headers: auth_headers
 
         expect(user.reload.first_name).to eq(params[:first_name])
       end
 
       it 'returns the updated user' do
-        put signup_url, params: params, headers: headers
+        put signup_url, params: params, headers: auth_headers
 
         expect(json_response[:data]).to include(params)
       end
@@ -132,7 +117,7 @@ RSpec.describe 'Registration', type: :request do
       let(:first_name) { '' }
 
       it 'returns an error' do
-        put signup_url, params: params, headers: headers
+        put signup_url, params: params, headers: auth_headers
 
         expect(json_response[:errors]).to eq(
           {

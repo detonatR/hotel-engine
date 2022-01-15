@@ -7,16 +7,9 @@ RSpec.describe 'Session', type: :request do
   let(:signin_url) { '/api/auth/sign_in' }
   let(:signout_url) { '/api/auth/sign_out' }
 
-  let(:login_params) do
-    {
-      email: user.email,
-      password: user.password
-    }
-  end
-
   describe 'POST /auth/sign_in' do
     context 'when login params is valid' do
-      before { post signin_url, params: login_params, as: :json }
+      before { login }
 
       it 'returns status 200' do
         expect(response).to have_http_status(200)
@@ -49,18 +42,9 @@ RSpec.describe 'Session', type: :request do
   end
 
   describe 'DELETE /auth/sign_out' do
-    let(:headers) do
-      {
-        'uid' => response.headers['uid'],
-        'client' => response.headers['client'],
-        'access-token' => response.headers['access-token']
-      }
-    end
-
-    before { post signin_url, params: login_params, as: :json }
-
     it 'returns status 200' do
-      delete signout_url, headers: headers
+      login
+      delete signout_url, headers: auth_headers
       expect(response).to have_http_status(200)
     end
   end
