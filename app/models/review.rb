@@ -9,12 +9,22 @@ class Review < ApplicationRecord
 
   validate :number_of_reviews
 
+  after_save :update_averages
+
   private
 
+  def update_averages
+    reviewable.update_average_rating! if book?
+  end
+
   def number_of_reviews
-    return unless reviewable.is_a?(Book)
+    return unless book?
     return unless user.reviews.where(reviewable: reviewable).exists?
 
     errors.add(:user, "can't have more than one review per book.")
+  end
+
+  def book?
+    reviewable.is_a?(Book)
   end
 end

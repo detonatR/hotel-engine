@@ -18,6 +18,7 @@ RSpec.describe '/api/books' do
             id: book.id,
             publish_date: book.publish_date,
             rating: book.rating,
+            average_rating: book.average_rating,
             title: book.title,
             updated_at: book.updated_at.iso8601(3)
           }
@@ -41,6 +42,7 @@ RSpec.describe '/api/books' do
             id: book.id,
             publish_date: book.publish_date,
             rating: book.rating,
+            average_rating: book.average_rating,
             title: book.title,
             updated_at: book.updated_at.iso8601(3)
           }

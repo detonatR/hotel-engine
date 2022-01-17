@@ -6,4 +6,9 @@ class Book < ApplicationRecord
   belongs_to :author
 
   validates :title, :description, presence: true
+
+  def update_average_rating!
+    count = reviews.average(:rating)
+    update_column(:average_rating, count)
+  end
 end

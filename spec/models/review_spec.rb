@@ -46,6 +46,30 @@ RSpec.describe Review, type: :model do
     end
   end
 
+  describe 'callbacks' do
+    subject(:review) { build(:review, reviewable: reviewable) }
+
+    describe 'update_averages' do
+      context 'when reviewable is a book' do
+        let(:reviewable) { create(:book) }
+
+        it 'runs the callback' do
+          expect(reviewable).to receive(:update_average_rating!)
+          review.run_callbacks(:save)
+        end
+      end
+
+      context 'when reviewable is NOT a book' do
+        let(:reviewable) { create(:author) }
+
+        it 'does nothing' do
+          expect(review).to receive(:update_averages).and_return(nil)
+          review.run_callbacks(:save)
+        end
+      end
+    end
+  end
+
   describe 'factories' do
     it 'has a valid factory' do
       review = build_stubbed(:review)

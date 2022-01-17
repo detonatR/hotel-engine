@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_112_001_141) do
+ActiveRecord::Schema.define(version: 20_220_117_165_651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20_220_112_001_141) do
     t.bigint 'author_id'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'average_rating', default: 0, null: false
     t.index ['author_id'], name: 'index_books_on_author_id'
   end
 
