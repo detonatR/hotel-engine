@@ -12,6 +12,10 @@ RSpec.describe Review, type: :model do
     it { is_expected.to validate_presence_of(:rating) }
     it { is_expected.to validate_numericality_of(:rating).is_greater_than_or_equal_to(1).is_less_than_or_equal_to(5) }
 
+    it 'uses the ProfanityValidator' do
+      expect(described_class.validators.map(&:class)).to include(ProfanityValidator)
+    end
+
     describe '#user' do
       subject(:review) { build(:review, reviewable: reviewable) }
 

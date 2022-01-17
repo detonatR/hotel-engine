@@ -1,0 +1,11 @@
+en:
+  profanity:
+    blacklist:
+      - frak
+      - storms
+      - gorram
+      - nerfherder
+      - crivens
+  errors:
+    messages:
+      profane: must not contain profanity.
